@@ -9,4 +9,8 @@ python manage.py migrate
 
 python manage.py createsuperuser --no-input || true
 
-python manage.py shell < cargar_datos.py   # <--- Línea activada
+# Carga directa de datos de la carta
+echo "=== Cargando datos de la carta ==="
+python manage.py loaddata app_carta.json --verbosity=2
+
+echo "=== Proceso de construcción completado ==="
