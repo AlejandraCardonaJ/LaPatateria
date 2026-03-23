@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>La Patatería - Carta</title>
+    <style>
+        /* Configuraciones de página para WeasyPrint */
+        @page {
+            size: A4;
+            margin: 1cm;
+            @bottom-right {
+                content: "Página " counter(page) " de " counter(pages);
+                font-size: 8px;
+                color: #999;
+            }
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            font-size: 11px;
+            color: #313232; /* Tu color oscuro */
+            line-height: 1.4;
+        }
+        
+        /* Encabezado Principal */
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #e5a221; /* Dorado */
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            color: #e5a221;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .header .lema {
+            font-style: italic;
+            font-size: 12px;
+            color: #d595ab; /* Rosa */
+            margin-top: 5px;
+        }
+
+        /* Contenedor de Categorías */
+        .categoria {
+            margin-bottom: 25px;
+            page-break-inside: avoid; /* Evita que una categoría se parta entre dos hojas */
+        }
+        
+        .categoria-header {
+            background-color: #d595ab; /* Rosa */
+            color: white;
+            padding: 6px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        /* Estructura de Producto (Mejorada para WeasyPrint) */
+        .producto-row {
+            padding: 5px 10px;
+            clear: both;
+            overflow: hidden; /* Limpia floats */
+        }
+
+        .producto-nombre {
+            float: left;
+            font-weight: bold;
+            width: 80%;
+        }
+
+        .producto-precio {
+            float: right;
+            font-weight: bold;
+            color: #e5a221;
+            width: 20%;
+            text-align: right;
+        }
+
+        .producto-desc {
+            font-size: 9px;
+            color: #666;
+            margin-left: 10px;
+            margin-bottom: 8px;
+            font-style: italic;
+            display: block;
+            width: 100%;
+        }
+
+        .recomendado {
+            color: #e5a221;
+            margin-left: 5px;
+        }
+
+        .footer {
+            position: running(footer);
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            font-size: 10px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>LA PATATERÍA</h1>
+        <p class="lema">"El mundo en una patata"</p>
+    </div>
+    
+    {% for categoria in categorias %}
+    <div class="categoria">
+        <div class="categoria-header">{{ categoria.nombre }}</div>
+        
+        {% for producto in categoria.productos.all %}
+        <div class="producto-row">
+            <span class="producto-nombre">
+                {{ producto.nombre }}
+                {% if producto.es_recomendado %}
+                <span class="recomendado">★</span>
+                {% endif %}
+            </span>
+            <span class="producto-precio">${{ producto.precio }}</span>
+        </div>
+        {% if producto.descripcion %}
+        <div class="producto-desc">
+            {{ producto.descripcion }}
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% endfor %}
+    
+    <div class="footer">
+        <p>Gracias por visitarnos | www.lapatateria.com</p>
+        <p>Precios sujetos a cambios sin previo aviso</p>
+    </div>
+</body>
+</html>

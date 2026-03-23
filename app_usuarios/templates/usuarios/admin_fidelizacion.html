@@ -1,0 +1,234 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Gestionar Fidelización | La Patatería{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <div class="card shadow-lg border-0">
+                <div class="card-body text-center">
+                    <img src="{% static 'img/logo_patateria.png' %}" alt="Admin" class="mb-3" height="60">
+                    <h5>{{ user.username }}</h5>
+                    <span class="badge bg-warning text-dark">Administrador</span>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <a href="{% url 'usuarios:admin_panel' %}" class="text-decoration-none text-dark">
+                            <i class="fas fa-home"></i> Inicio
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{% url 'usuarios:admin_productos' %}" class="text-decoration-none text-dark">
+                            <i class="fas fa-utensils"></i> Gestionar Carta
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{% url 'usuarios:admin_categorias' %}" class="text-decoration-none text-dark">
+                            <i class="fas fa-tags"></i> Categorías
+                        </a>
+                    </li>
+                    <li class="list-group-item active bg-dark">
+                        <a href="{% url 'usuarios:admin_fidelizacion' %}" class="text-decoration-none text-white">
+                            <i class="fas fa-gift"></i> Fidelización
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{% url 'usuarios:admin_clientes' %}" class="text-decoration-none text-dark">
+                            <i class="fas fa-users"></i> Clientes
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{% url 'usuarios:admin_pedidos' %}" class="text-decoration-none text-dark">
+                            <i class="fas fa-shopping-cart"></i> Pedidos
+                        </a>
+                    </li>
+                </ul>
+                <div class="card-footer">
+                    <a href="{% url 'usuarios:logout' %}" class="btn btn-outline-danger btn-sm w-100">
+                        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Contenido Principal -->
+        <div class="col-md-9">
+            <h2 class="mb-4"><i class="fas fa-gift"></i> Estrategias de Fidelización</h2>
+            
+            <!-- Mensajes -->
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                {% endfor %}
+            {% endif %}
+            
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i> 
+                <strong>Nota:</strong> Los programas de fidelización se aplican automáticamente según las reglas del sistema.
+                Aquí puedes activar o desactivar cada programa.
+            </div>
+            
+            <!-- Programas de Fidelización -->
+            <div class="row">
+                <!-- Dado Dinámico -->
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-lg border-0 h-100 {% if not programas.0.activo %}border-danger opacity-75{% endif %}">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="d-flex align-items-center">
+                                    <span class="fa-3x me-3">🎲</span>
+                                    <div>
+                                        <h5 class="card-title mb-1">Dado Dinámico</h5>
+                                        <span class="badge bg-primary">Premio aleatorio</span>
+                                    </div>
+                                </div>
+                                {% if programas.0 %}
+                                <a href="{% url 'usuarios:admin_fidelizacion_toggle' programas.0.id %}" 
+                                   class="btn btn-sm {% if programas.0.activo %}btn-success{% else %}btn-danger{% endif %}">
+                                    {% if programas.0.activo %}<i class="fas fa-check"></i> Activo{% else %}<i class="fas fa-times"></i> Inactivo{% endif %}
+                                </a>
+                                {% else %}
+                                <span class="badge bg-secondary">No configurado</span>
+                                {% endif %}
+                            </div>
+                            <hr>
+                            <p class="card-text text-muted small">
+                                En cada pedido a domicilio, el cliente puede tirar el dado y ganar premios instantáneos como:
+                                <ul class="small mb-0">
+                                    <li>Postre de la casa Gratis</li>
+                                    <li>Papas a la francesa Gratis</li>
+                                    <li>Bebida de la Casa Gratis</li>
+                                    <li>Gaseosa 400ml Gratis</li>
+                                </ul>
+                            </p>
+                            {% if programas.0 %}
+                            <div class="mt-2">
+                                <small class="text-muted">Descuento actual: {{ programas.0.valor_descuento }}%</small>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Papa Cumpleañera -->
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-lg border-0 h-100 {% if programas.1 %}{% if not programas.1.activo %}border-danger opacity-75{% endif %}{% else %}border-warning{% endif %}">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="d-flex align-items-center">
+                                    <span class="fa-3x me-3">🎂</span>
+                                    <div>
+                                        <h5 class="card-title mb-1">Papa Cumpleañera</h5>
+                                        <span class="badge bg-warning text-dark">Cumpleaños</span>
+                                    </div>
+                                </div>
+                                {% if programas.1 %}
+                                <a href="{% url 'usuarios:admin_fidelizacion_toggle' programas.1.id %}" 
+                                   class="btn btn-sm {% if programas.1.activo %}btn-success{% else %}btn-danger{% endif %}">
+                                    {% if programas.1.activo %}<i class="fas fa-check"></i> Activo{% else %}<i class="fas fa-times"></i> Inactivo{% endif %}
+                                </a>
+                                {% else %}
+                                <span class="badge bg-secondary">No configurado</span>
+                                {% endif %}
+                            </div>
+                            <hr>
+                            <p class="card-text text-muted small">
+                                En el cumpleaños del cliente, recibe un pedido gratis de hasta $80.000.
+                                <br><strong>Solo aplica una vez por día.</strong>
+                            </p>
+                            {% if programas.1 %}
+                            <div class="mt-2">
+                                <small class="text-muted">Descuento: 100% (hasta ${{ programas.1.monto_maximo|default:80000 }})</small>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Papa O'clock -->
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-lg border-0 h-100 {% if programas.2 %}{% if not programas.2.activo %}border-danger opacity-75{% endif %}{% else %}border-warning{% endif %}">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="d-flex align-items-center">
+                                    <span class="fa-3x me-3">⏰</span>
+                                    <div>
+                                        <h5 class="card-title mb-1">Papa O'clock</h5>
+                                        <span class="badge bg-info">Horario</span>
+                                    </div>
+                                </div>
+                                {% if programas.2 %}
+                                <a href="{% url 'usuarios:admin_fidelizacion_toggle' programas.2.id %}" 
+                                   class="btn btn-sm {% if programas.2.activo %}btn-success{% else %}btn-danger{% endif %}">
+                                    {% if programas.2.activo %}<i class="fas fa-check"></i> Activo{% else %}<i class="fas fa-times"></i> Inactivo{% endif %}
+                                </a>
+                                {% else %}
+                                <span class="badge bg-secondary">No configurado</span>
+                                {% endif %}
+                            </div>
+                            <hr>
+                            <p class="card-text text-muted small">
+                                Envío gratis en las primeras 2 horas del día.
+                                <br><strong>Horario: 12:00 PM - 2:00 PM</strong>
+                            </p>
+                            {% if programas.2 %}
+                            <div class="mt-2">
+                                <small class="text-muted">Descuento: 100% en envío</small>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Papa Lovers 4x3 -->
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-lg border-0 h-100 {% if programas.3 %}{% if not programas.3.activo %}border-danger opacity-75{% endif %}{% else %}border-warning{% endif %}">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="d-flex align-items-center">
+                                    <span class="fa-3x me-3">🍟</span>
+                                    <div>
+                                        <h5 class="card-title mb-1">Papa Lovers 4x3</h5>
+                                        <span class="badge bg-danger">Lealtad</span>
+                                    </div>
+                                </div>
+                                {% if programas.3 %}
+                                <a href="{% url 'usuarios:admin_fidelizacion_toggle' programas.3.id %}" 
+                                   class="btn btn-sm {% if programas.3.activo %}btn-success{% else %}btn-danger{% endif %}">
+                                    {% if programas.3.activo %}<i class="fas fa-check"></i> Activo{% else %}<i class="fas fa-times"></i> Inactivo{% endif %}
+                                </a>
+                                {% else %}
+                                <span class="badge bg-secondary">No configurado</span>
+                                {% endif %}
+                            </div>
+                            <hr>
+                            <p class="card-text text-muted small">
+                                Después de 3 pedidos a domicilio en el mes, el 4º es gratis.
+                                <br><strong>Tope: $60.000</strong>
+                            </p>
+                            {% if programas.3 %}
+                            <div class="mt-2">
+                                <small class="text-muted">Requiere: 3 pedidos mínimos</small>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-3">
+                <a href="{% url 'usuarios:admin_panel' %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Volver al Panel
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,118 @@
+/* 1. VARIABLES DE MARCA (Colores oficiales) */
+:root {
+    --dorado: #e5a221;
+    --rosa: #d595ab;
+    --crema: #f9e8d4;
+    --naranja: #ffa601;
+    --oscuro: #313232;
+}
+
+/* 2. ESTILOS GENERALES */
+body { 
+    font-family: 'Open Sans', sans-serif; 
+    background-color: var(--crema); 
+    color: var(--oscuro);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Títulos con peso y transformación (Sustituto de DK LongReach) */
+h1, h2, h3 { 
+    font-weight: 700; 
+    text-transform: uppercase; 
+    color: var(--oscuro); 
+}
+
+/* Tipografía en cursiva para detalles decorativos */
+.cursiva { 
+    font-family: 'Dancing Script', cursive; 
+    color: var(--dorado); 
+    font-size: 1.5rem; 
+}
+
+/* 3. NAVEGACIÓN (Navbar) */
+.navbar-patateria { 
+    background-color: white !important; 
+    border-bottom: 4px solid var(--dorado); 
+}
+
+/* 4. COMPONENTES INTERACTIVOS */
+/* Botón WhatsApp Flotante a la Izquierda */
+.btn-whatsapp {
+    position: fixed; 
+    bottom: 30px; 
+    left: 30px; 
+    background-color: #25d366; 
+    color: white;
+    border-radius: 50%; 
+    width: 60px; 
+    height: 60px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    font-size: 30px; 
+    z-index: 1000; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    text-decoration: none; 
+    transition: 0.3s ease;
+}
+
+.btn-whatsapp:hover { 
+    transform: scale(1.1); 
+    color: white; 
+}
+
+/* 5. PIE DE PÁGINA (Footer) */
+footer { 
+    background-color: var(--oscuro); 
+    color: white; 
+    padding: 40px 0; 
+    width: 100%;
+    margin-top: auto; /* Empuja el footer al fondo si hay poco contenido */
+}
+
+footer h5 { 
+    color: var(--dorado); 
+    font-size: 1.1rem; 
+    font-weight: bold;
+    margin-bottom: 20px; 
+}
+
+footer p { 
+    font-size: 0.9rem; 
+    margin-bottom: 5px; 
+}
+
+/* Iconos del footer */
+footer i {
+    color: var(--dorado);
+    margin-right: 8px;
+}
+
+/* Contenedor invisible para que todas las imágenes ocupen el mismo alto */
+.contenedor-papa-img {
+    width: 100%;
+    max-width: 120px;
+    margin-bottom: 10px;
+}
+
+.contenedor-papa-img img {
+    max-height: 100%;
+    object-fit: contain; /* Evita que la imagen se estire */
+    transition: transform 0.3s ease;
+}
+
+/* Efecto visual cuando el usuario pasa el mouse */
+.contenedor-papa-img img:hover {
+    transform: scale(1.1);
+}
+
+/* Forzar que el texto sea legible y esté centrado */
+section p.fw-bold {
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}

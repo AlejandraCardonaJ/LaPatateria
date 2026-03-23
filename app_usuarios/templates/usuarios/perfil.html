@@ -1,0 +1,257 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Mi Perfil | La Patatería{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Panel de Bienvenida y Estadísticas -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-lg border-0" style="background: linear-gradient(135deg, #e5a221 0%, #f4d03f 100%);">
+                <div class="card-body text-white">
+                    <div class="row align-items-center">
+                        <div class="col-md-2 text-center">
+                            <img src="{% static 'img/logo_patateria.png' %}" alt="Perfil" class="rounded-circle bg-white p-1" height="80">
+                        </div>
+                        <div class="col-md-7">
+                            <h3 class="mb-1">¡Bienvenido, {{ usuario.username }}!</h3>
+                            <p class="mb-0 opacity-75">Cliente de La Patatería</p>
+                        </div>
+                        <div class="col-md-3 text-center text-md-end">
+                            <div class="bg-white rounded p-2 text-dark">
+                                <h4 class="mb-0"><i class="fas fa-shopping-bag"></i> {{ pedidos_mes }}</h4>
+                                <small>pedidos este mes</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botones de Acción Rápida -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex gap-2 justify-content-center">
+                <a href="{% url 'carta:home' %}" class="btn btn-lg rounded-pill" style="background-color: #e5a221; color: white;">
+                    <i class="fas fa-utensils"></i> Ver Carta y Comprar
+                </a>
+                <a href="{% url 'pedidos:ver_carrito' %}" class="btn btn-lg btn-outline-dark rounded-pill">
+                    <i class="fas fa-shopping-cart"></i> Mi Carrito
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Programas de Fidelización -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-header" style="background-color: #d595ab; color: white;">
+                    <h5 class="mb-0"><i class="fas fa-gift"></i> Mis Programas de Fidelización</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Papa Cumpleañera -->
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 border-0 {% if fidelizacion.papa_cumpleañera %}bg-success text-white{% else %}bg-light{% endif %}">
+                                <div class="card-body text-center">
+                                    <div class="display-4 mb-2">🎂</div>
+                                    <h6 class="fw-bold">Papa Cumpleañera</h6>
+                                    {% if fidelizacion.papa_cumpleañera %}
+                                        <p class="small mb-0">¡Feliz cumpleaños! Tienes un pedido gratis de hasta $80,000</p>
+                                        <small class="opacity-75">Canjeable en tu cumpleaños</small>
+                                    {% else %}
+                                        <p class="small text-muted mb-0">Pedido gratis hasta $80,000 en tu cumpleaños</p>
+                                        {% if usuario.fecha_nacimiento %}
+                                        <small class="text-muted">Tu cumpleaños: {{ usuario.fecha_nacimiento|date:"d/m" }}</small>
+                                        {% else %}
+                                        <small class="text-muted">Registra tu fecha de nacimiento</small>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Papa O'clock -->
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 border-0 {% if fidelizacion.papa_oclock %}bg-warning text-dark{% else %}bg-light{% endif %}">
+                                <div class="card-body text-center">
+                                    <div class="display-4 mb-2">⏰</div>
+                                    <h6 class="fw-bold">Papa O'clock</h6>
+                                    {% if fidelizacion.papa_oclock %}
+                                        <p class="small mb-0">¡Envío gratis ahora!</p>
+                                        <small class="opacity-75">De 12pm a 2pm</small>
+                                    {% else %}
+                                        <p class="small text-muted mb-0">Envío gratis de 12pm a 2pm</p>
+                                        <small class="text-muted">¡APROVÉCHALO!</small>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Papa Lovers 4x3 -->
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 border-0 {% if fidelizacion.toma_4x3 %}bg-info text-white{% else %}bg-light{% endif %}">
+                                <div class="card-body text-center">
+                                    <div class="display-4 mb-2">🍟</div>
+                                    <h6 class="fw-bold">Papa Lovers 4x3</h6>
+                                    {% if fidelizacion.toma_4x3 %}
+                                        <p class="small mb-0">¡Tu 4 domicilio del mes es gratis!</p>
+                                        <small class="opacity-75">Límite: $60,000</small>
+                                    {% else %}
+                                        <p class="small text-muted mb-0">Tu 4° domicilio al mes es gratis (tope $60,000)</p>
+                                        <!-- <small class="text-muted">Domicilios este mes: {{ usuario.domicilios_mes }}/3</small> -->
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Datos del Perfil -->
+        <div class="col-md-5 mb-4">
+            <div class="card shadow-lg border-0 h-100">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0"><i class="fas fa-user"></i> Mis Datos</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="text-muted small">Nombre de usuario</label>
+                        <p class="fw-bold mb-1">{{ usuario.username }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="text-muted small">Correo electrónico</label>
+                        <p class="fw-bold mb-1">{{ usuario.email|default:"No registrado" }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="text-muted small">Teléfono</label>
+                        <p class="fw-bold mb-1">{{ usuario.telefono|default:"No registrado" }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="text-muted small">Dirección</label>
+                        <p class="fw-bold mb-1">{{ usuario.direccion|default:"No registrada" }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="text-muted small">Fecha de nacimiento</label>
+                        <p class="fw-bold mb-0">
+                            {% if usuario.fecha_nacimiento %}
+                                {{ usuario.fecha_nacimiento|date:"d/m/Y" }}
+                            {% else %}
+                                No registrada
+                            {% endif %}
+                        </p>
+                        <small class="text-muted">(Solo editable por el administrador)</small>
+                    </div>
+                </div>
+                <div class="card-footer bg-white">
+                    <button class="btn btn-warning rounded-pill" data-bs-toggle="modal" data-bs-target="#editarPerfilModal">
+                        <i class="fas fa-edit"></i> Editar Perfil
+                    </button>
+                    <a href="{% url 'usuarios:logout' %}" class="btn btn-outline-danger rounded-pill float-end">
+                        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mis Pedidos -->
+        <div class="col-md-7 mb-4">
+            <div class="card shadow-lg border-0 h-100">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0"><i class="fas fa-history"></i> Mis Pedidos del Mes</h5>
+                </div>
+                <div class="card-body" style="max-height: 500px; overflow-y: auto;">
+                    {% if todos_pedidos %}
+                    {% for pedido in todos_pedidos %}
+                    <div class="card mb-3 border-0 bg-light">
+                        <div class="card-body py-3">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <div>
+                                    <h6 class="mb-0">Pedido #{{ pedido.id }}</h6>
+                                    <small class="text-muted">{{ pedido.fecha_pedido|date:"d/m/Y H:i" }}</small>
+                                </div>
+                                <span class="badge bg-{% if pedido.estado == 'ENTREGADO' %}success{% elif pedido.estado == 'CANCELADO' %}danger{% elif pedido.estado == 'PENDIENTE' %}warning{% else %}info{% endif %}">
+                                    {{ pedido.get_estado_display }}
+                                </span>
+                            </div>
+                            <div class="mb-2">
+                                <small>
+                                    <i class="fas {% if pedido.tipo_entrega == 'TIENDA' %}fa-store{% else %}fa-truck{% endif %}"></i>
+                                    {% if pedido.tipo_entrega == 'TIENDA' %}Recoger en tienda{% else %}Domicilio{% endif %}
+                                </small>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    {% for detalle in pedido.detalles.all|slice:":2" %}
+                                    <small class="d-block text-muted">{{ detalle.cantidad }}x {{ detalle.producto_nombre }}</small>
+                                    {% endfor %}
+                                    {% if pedido.detalles.count > 2 %}
+                                    <small class="text-muted">+{{ pedido.detalles.count|add:"-2" }} más</small>
+                                    {% endif %}
+                                </div>
+                                <div class="text-end">
+                                    <strong class="text-warning">${{ pedido.total }}</strong>
+                                    {% if pedido.aplica_papa_oclock or pedido.aplica_4x3 or pedido.aplica_papa_cumpleañera %}
+                                    <br><small class="text-success"><i class="fas fa-gift"></i> Con descuento</small>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="text-center py-5">
+                        <div class="display-4 mb-3">🍟</div>
+                        <h5>¡Aún no tienes pedidos!</h5>
+                        <p class="text-muted">Explora nuestro menú y haz tu primer pedido</p>
+                        <a href="{% url 'carta:home' %}" class="btn btn-warning rounded-pill">
+                            <i class="fas fa-utensils"></i> Ver Carta
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Editar Perfil -->
+<div class="modal fade" id="editarPerfilModal" tabindex="-1" aria-labelledby="editarPerfilModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #e5a221; color: white;">
+                <h5 class="modal-title" id="editarPerfilModalLabel">Editar Perfil</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="{% url 'usuarios:actualizar_perfil' %}">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Teléfono</label>
+                        <input type="text" name="telefono" class="form-control" value="{{ usuario.telefono|default:'' }}" placeholder="Ingresa tu teléfono">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Dirección</label>
+                        <textarea name="direccion" class="form-control" rows="2" placeholder="Ingresa tu dirección">{{ usuario.direccion|default:'' }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Correo electrónico</label>
+                        <input type="email" name="email" class="form-control" value="{{ usuario.email|default:'' }}" placeholder="Ingresa tu correo">
+                    </div>
+                    <small class="text-muted">Nota: La fecha de nacimiento solo puede ser editada por un administrador.</small>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-warning">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

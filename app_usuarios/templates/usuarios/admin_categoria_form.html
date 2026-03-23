@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if accion == 'crear' %}Nueva Categoría{% else %}Editar Categoría{% endif %} | La Patatería{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <div class="card shadow-lg border-0">
+                <div class="card-body text-center">
+                    <img src="{% static 'img/logo_patateria.png' %}" alt="Admin" class="mb-3" height="60">
+                    <h5>{{ user.username }}</h5>
+                    <span class="badge bg-warning text-dark">Administrador</span>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <a href="{% url 'usuarios:admin_panel' %}" class="text-decoration-none text-dark">
+                            <i class="fas fa-home"></i> Inicio
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{% url 'usuarios:admin_productos' %}" class="text-decoration-none text-dark">
+                            <i class="fas fa-utensils"></i> Gestionar Carta
+                        </a>
+                    </li>
+                    <li class="list-group-item active bg-dark">
+                        <a href="{% url 'usuarios:admin_categorias' %}" class="text-decoration-none text-white">
+                            <i class="fas fa-tags"></i> Categorías
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{% url 'usuarios:admin_fidelizacion' %}" class="text-decoration-none text-dark">
+                            <i class="fas fa-gift"></i> Fidelización
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{% url 'usuarios:admin_clientes' %}" class="text-decoration-none text-dark">
+                            <i class="fas fa-users"></i> Clientes
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{% url 'usuarios:admin_pedidos' %}" class="text-decoration-none text-dark">
+                            <i class="fas fa-shopping-cart"></i> Pedidos
+                        </a>
+                    </li>
+                </ul>
+                <div class="card-footer">
+                    <a href="{% url 'usuarios:logout' %}" class="btn btn-outline-danger btn-sm w-100">
+                        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Contenido Principal -->
+        <div class="col-md-9">
+            <h2 class="mb-4">
+                <i class="fas fa-tags"></i> 
+                {% if accion == 'crear' %}Nueva Categoría{% else %}Editar Categoría{% endif %}
+            </h2>
+            
+            <div class="card shadow-lg border-0">
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre de la categoría *</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" 
+                                   value="{{ categoria.nombre|default:'' }}" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="orden" class="form-label">Orden de aparición</label>
+                            <input type="number" class="form-control" id="orden" name="orden" 
+                                   value="{{ categoria.orden|default:'0' }}" min="0">
+                            <div class="form-text">Número menor aparece primero en el menú</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="descripcion" name="descripcion" rows="3">{{ categoria.descripcion|default:'' }}</textarea>
+                        </div>
+                        
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="activa" name="activa" 
+                                   {% if categoria.activa or accion == 'crear' %}checked{% endif %}>
+                            <label class="form-check-label" for="activa">
+                                Categoría activa (visible en el menú)
+                            </label>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> 
+                                {% if accion == 'crear' %}Crear Categoría{% else %}Guardar Cambios{% endif %}
+                            </button>
+                            <a href="{% url 'usuarios:admin_categorias' %}" class="btn btn-secondary">
+                                Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,230 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold" style="color: #e5a221;">🛒 Tu Carrito</h1>
+        <p class="text-muted">Revisa tus productos antes de confirmar</p>
+    </div>
+
+    {% if bloqueado_cumpleañero %}
+    <div class="alert alert-danger text-center py-5">
+        <div class="display-1 mb-3">🎂</div>
+        <h3>¡Ya usaste tu beneficio de Papa Cumpleañera hoy!</h3>
+        <p class="text-muted">Tu beneficio de pedido gratis en tu cumpleaños ya fue redimido hoy.</p>
+        <p><strong>¡Vuelve mañana para seguir disfrutando de La Patatería!</strong></p>
+        <a href="{% url 'carta:home' %}" class="btn btn-warning mt-3" style="background-color: #e5a221; border: none;">
+            Volver al Inicio
+        </a>
+    </div>
+    {% elif not productos_carrito %}
+    <div class="text-center py-5">
+        <div class="display-1 mb-3">🍟</div>
+        <h3>Tu carrito está vacío</h3>
+        <p class="text-muted">¡Agrega algunas delicias de La Patatería!</p>
+        <a href="{% url 'carta:home' %}" class="btn btn-warning mt-3" style="background-color: #e5a221; border: none;">
+            Ver Carta
+        </a>
+    </div>
+    {% else %}
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    {% for item in productos_carrito %}
+                    <div class="row align-items-center mb-3 border-bottom pb-3">
+                        <div class="col-md-2">
+                            {% if item.producto.imagen %}
+                            <img src="{{ item.producto.imagen.url }}" alt="{{ item.producto.nombre }}" 
+                                 class="img-fluid rounded" style="width: 80px; height: 80px; object-fit: cover;">
+                            {% else %}
+                            <div class="bg-light rounded d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                <span class="text-muted">🍟</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-4">
+                            <h5 class="mb-0">{{ item.producto.nombre }}</h5>
+                            <small class="text-muted">${{ item.producto.precio }} c/u</small>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <button class="btn btn-outline-secondary btn-sm" onclick="actualizarCantidad({{ item.producto.id }}, {{ item.cantidad|add:'-1' }})">-</button>
+                                <input type="number" class="form-control text-center" value="{{ item.cantidad }}" readonly style="max-width: 60px;">
+                                <button class="btn btn-outline-secondary btn-sm" onclick="actualizarCantidad({{ item.producto.id }}, {{ item.cantidad|add:'1' }})">+</button>
+                            </div>
+                        </div>
+                        <div class="col-md-2 text-end">
+                            <strong>${{ item.subtotal }}</strong>
+                        </div>
+                        <div class="col-md-1 text-end">
+                            <button class="btn btn-danger btn-sm" onclick="eliminarDelCarrito({{ item.producto.id }})">
+                                🗑️
+                            </button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card shadow-sm" style="border-color: #e5a221;">
+                <div class="card-header" style="background-color: #e5a221; color: white;">
+                    <h5 class="mb-0">💰 Resumen</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Subtotal:</span>
+                        <span>${{ total }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Envío:</span>
+                        <span id="costo-envio">
+                            {% if tipo_entrega == 'DOMICILIO' %}
+                                {% if fidelizacion.papa_oclock %}
+                                <strong class="text-success">GRATIS</strong>
+                                {% else %}
+                                $3,000
+                                {% endif %}
+                            {% else %}
+                            <strong class="text-success">GRATIS</strong>
+                            {% endif %}
+                        </span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between mb-3">
+                        <strong>Total:</strong>
+                        <strong class="fs-5" style="color: #e5a221;" id="total-final">${{ total }}</strong>
+                    </div>
+                    
+                    <form id="pedidoForm" method="POST" action="{% url 'pedidos:confirmar_pedido' %}">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Tipo de Entrega:</label>
+                            <div class="btn-group w-100" role="group">
+                                <input type="radio" class="btn-check" name="tipo_entrega" id="tienda" value="TIENDA" 
+                                       {% if tipo_entrega != 'DOMICILIO' %}checked{% endif %} onchange="actualizarEnvio()">
+                                <label class="btn btn-outline-warning" for="tienda">🏪 Recoger</label>
+                                
+                                <input type="radio" class="btn-check" name="tipo_entrega" id="domicilio" value="DOMICILIO" 
+                                       {% if tipo_entrega == 'DOMICILIO' %}checked{% endif %} onchange="actualizarEnvio()">
+                                <label class="btn btn-outline-warning" for="domicilio">🚚 Domicilio</label>
+                            </div>
+                        </div>
+                        
+                        <div id="infoDomicilio" class="mb-3" {% if tipo_entrega != 'DOMICILIO' %}style="display: none;"{% endif %}>
+                            <label class="form-label">Dirección de entrega:</label>
+                            <input type="text" class="form-control" name="direccion" placeholder="Carrera 10 #20-30">
+                        </div>
+                        
+                        <div id="infoFidelizacion" class="mb-3">
+                            <label class="form-label">🎁 Programas de Fidelización:</label>
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    {% if fidelizacion.mensaje %}
+                                        <p class="mb-0 small">{{ fidelizacion.mensaje }}</p>
+                                    {% else %}
+                                        <p class="text-muted mb-0">No hay programas disponibles para este pedido</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn w-100 text-white" style="background-color: #e5a221; border: none;">
+                            Confirmar Pedido
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+function actualizarEnvio() {
+    const tipoDomicilio = document.getElementById('domicilio').checked;
+    const infoDomicilio = document.getElementById('infoDomicilio');
+    const costoEnvio = document.getElementById('costo-envio');
+    const totalFinal = document.getElementById('total-final');
+    const subtotal = {{ total }};
+    
+    if (tipoDomicilio) {
+        infoDomicilio.style.display = 'block';
+        // Verificar si aplica envío gratis por fidelización
+        const fidelizacionActiva = {{ fidelizacion.papa_oclock|yesno:"true,false" }};
+        if (fidelizacionActiva) {
+            costoEnvio.innerHTML = '<strong class="text-success">GRATIS</strong>';
+            totalFinal.textContent = '$' + subtotal.toLocaleString();
+        } else {
+            costoEnvio.textContent = '$3,000';
+            totalFinal.textContent = '$' + (subtotal + 3000).toLocaleString();
+        }
+    } else {
+        infoDomicilio.style.display = 'none';
+        costoEnvio.innerHTML = '<strong class="text-success">GRATIS</strong>';
+        totalFinal.textContent = '$' + subtotal.toLocaleString();
+    }
+}
+
+function actualizarCantidad(productoId, nuevaCantidad) {
+    if (nuevaCantidad < 1) {
+        // Si la cantidad es menor a 1, eliminar el producto
+        if (confirm('¿Eliminar este producto del carrito?')) {
+            eliminarDelCarrito(productoId);
+        }
+        return;
+    }
+    
+    fetch(`/pedidos/carrito/actualizar/${productoId}/${nuevaCantidad}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error HTTP: ' + response.status);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        } else {
+            alert('Error: ' + (data.error || 'Error desconocido'));
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error al actualizar cantidad: ' + error.message);
+    });
+}
+
+function eliminarDelCarrito(productoId) {
+    if (confirm('¿Eliminar este producto del carrito?')) {
+        fetch(`/pedidos/carrito/eliminar/${productoId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al eliminar producto');
+        });
+    }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,267 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Detalle del Pedido #{{ pedido.id }} | La Patatería{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <div class="card shadow-lg border-0">
+                <div class="card-body text-center">
+                    <img src="{% static 'img/logo_patateria.png' %}" alt="Admin" class="mb-3" height="60">
+                    <h5>{{ user.username }}</h5>
+                    <span class="badge bg-warning text-dark">Administrador</span>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <a href="{% url 'usuarios:admin_panel' %}" class="text-decoration-none text-dark">
+                            <i class="fas fa-home"></i> Inicio
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{% url 'usuarios:admin_productos' %}" class="text-decoration-none text-dark">
+                            <i class="fas fa-utensils"></i> Gestionar Carta
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{% url 'usuarios:admin_categorias' %}" class="text-decoration-none text-dark">
+                            <i class="fas fa-tags"></i> Categorías
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{% url 'usuarios:admin_fidelizacion' %}" class="text-decoration-none text-dark">
+                            <i class="fas fa-gift"></i> Fidelización
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{% url 'usuarios:admin_clientes' %}" class="text-decoration-none text-dark">
+                            <i class="fas fa-users"></i> Clientes
+                        </a>
+                    </li>
+                    <li class="list-group-item active bg-dark">
+                        <a href="{% url 'usuarios:admin_pedidos' %}" class="text-decoration-none text-white">
+                            <i class="fas fa-shopping-cart"></i> Pedidos
+                        </a>
+                    </li>
+                </ul>
+                <div class="card-footer">
+                    <a href="{% url 'usuarios:logout' %}" class="btn btn-outline-danger btn-sm w-100">
+                        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Contenido Principal -->
+        <div class="col-md-9">
+            <!-- Mensajes -->
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                {% endfor %}
+            {% endif %}
+            
+            <!-- Header del pedido -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2><i class="fas fa-shopping-cart"></i> Pedido #{{ pedido.id }}</h2>
+                <div>
+                    {% if pedido.estado != 'CANCELADO' and pedido.estado != 'ENTREGADO' %}
+                    <a href="{% url 'usuarios:admin_pedido_cancelar' pedido.id %}" class="btn btn-danger" onclick="return confirm('¿Estás seguro de cancelar este pedido?');">
+                        <i class="fas fa-times"></i> Cancelar Pedido
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Estado actual -->
+            <div class="alert {% if pedido.estado == 'CANCELADO' %}alert-secondary{% elif pedido.estado == 'ENTREGADO' %}alert-success{% elif pedido.estado == 'PENDIENTE' %}alert-warning{% else %}alert-info{% endif %}">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>Estado actual:</strong> 
+                        {% if pedido.estado == 'PENDIENTE' %}
+                        <span class="badge bg-warning text-dark">Pendiente</span>
+                        {% elif pedido.estado == 'CONFIRMADO' %}
+                        <span class="badge bg-primary">Confirmado</span>
+                        {% elif pedido.estado == 'PREPARANDO' %}
+                        <span class="badge" style="background-color: #fd7e14;">Preparando</span>
+                        {% elif pedido.estado == 'EN_CAMINO' %}
+                        <span class="badge bg-info">En camino</span>
+                        {% elif pedido.estado == 'ENTREGADO' %}
+                        <span class="badge bg-success">Entregado</span>
+                        {% elif pedido.estado == 'CANCELADO' %}
+                        <span class="badge bg-danger">Cancelado</span>
+                        {% endif %}
+                    </div>
+                    <div><strong>Fecha:</strong> {{ pedido.fecha_pedido|date:"d/m/Y H:i" }}</div>
+                </div>
+            </div>
+            
+            <!-- Cambiar estado -->
+            {% if pedido.estado != 'CANCELADO' and pedido.estado != 'ENTREGADO' %}
+            <div class="card shadow-lg border-0 mb-4">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0"><i class="fas fa-exchange-alt"></i> Cambiar Estado</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{% url 'usuarios:admin_pedido_estado' pedido.id %}">
+                        {% csrf_token %}
+                        <div class="row align-items-end">
+                            <div class="col-md-8">
+                                <label for="estado" class="form-label">Seleccionar nuevo estado:</label>
+                                <select class="form-select" id="estado" name="estado">
+                                    <option value="PENDIENTE" {% if pedido.estado == 'PENDIENTE' %}selected{% endif %}>🟡 Pendiente</option>
+                                    <option value="CONFIRMADO" {% if pedido.estado == 'CONFIRMADO' %}selected{% endif %}>🔵 Confirmado</option>
+                                    <option value="PREPARANDO" {% if pedido.estado == 'PREPARANDO' %}selected{% endif %}>🟠 Preparando</option>
+                                    <option value="EN_CAMINO" {% if pedido.estado == 'EN_CAMINO' %}selected{% endif %}>🚚 En camino</option>
+                                    <option value="ENTREGADO" {% if pedido.estado == 'ENTREGADO' %}selected{% endif %}>🟢 Entregado</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i class="fas fa-save"></i> Actualizar Estado
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Datos del cliente -->
+            <div class="card shadow-lg border-0 mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-user"></i> Datos del Cliente</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Cliente:</strong> {{ pedido.usuario.username }}</p>
+                            <p><strong>Email:</strong> {{ pedido.usuario.email|default:"-" }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Teléfono:</strong> {{ pedido.telefono_contacto|default:pedido.usuario.telefono|default:"-" }}</p>
+                            <p><strong>Tipo:</strong> 
+                                {% if pedido.tipo_entrega == 'DOMICILIO' %}
+                                <span class="badge bg-info">Domicilio</span>
+                                {% else %}
+                                <span class="badge bg-secondary">Recoger en tienda</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                    {% if pedido.tipo_entrega == 'DOMICILIO' and pedido.direccion_entrega %}
+                    <hr>
+                    <p><strong>Dirección de entrega:</strong> {{ pedido.direccion_entrega }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Productos del pedido -->
+            <div class="card shadow-lg border-0 mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-utensils"></i> Productos del Pedido</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio Unit.</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for detalle in detalles %}
+                                <tr>
+                                    <td>{{ detalle.producto_nombre }}</td>
+                                    <td>{{ detalle.cantidad }}</td>
+                                    <td>${{ detalle.precio_unitario|floatformat:0|intcomma }}</td>
+                                    <td>${{ detalle.subtotal|floatformat:0|intcomma }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted py-3">
+                                        <em>No hay productos registrados en este pedido</em>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                <tr class="table-secondary">
+                                    <td colspan="3" class="text-end"><strong>Subtotal:</strong></td>
+                                    <td>${{ subtotal_original|floatformat:0|intcomma }}</td>
+                                </tr>
+                                {% if pedido.costo_envio > 0 %}
+                                <tr class="table-secondary">
+                                    <td colspan="3" class="text-end"><strong>Envío:</strong></td>
+                                    <td>${{ pedido.costo_envio|floatformat:0|intcomma }}</td>
+                                </tr>
+                                {% endif %}
+                                {% if pedido.descuento_aplicado > 0 %}
+                                <tr class="table-success">
+                                    <td colspan="3" class="text-end"><strong>Descuento:</strong></td>
+                                    <td>-${{ pedido.descuento_aplicado|floatformat:0|intcomma }}</td>
+                                </tr>
+                                {% endif %}
+                                <tr class="table-dark">
+                                    <td colspan="3" class="text-end"><strong>TOTAL:</strong></td>
+                                    <td><strong>${{ pedido.total|floatformat:0|intcomma }}</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Fidelización aplicada -->
+            {% if pedido.aplica_papa_cumpleañera or pedido.aplica_papa_oclock or pedido.aplica_4x3 or pedido.recompensa_dado %}
+            <div class="card shadow-lg border-0 mb-4">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0"><i class="fas fa-gift"></i> Fidelización Aplicada</h5>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        {% if pedido.aplica_papa_cumpleañera %}
+                        <li>🎂 Papa Cumpleañera - Pedido gratis</li>
+                        {% endif %}
+                        {% if pedido.aplica_papa_oclock %}
+                        <li>⏰ Papa O'clock - Envío gratis</li>
+                        {% endif %}
+                        {% if pedido.aplica_4x3 %}
+                        <li>🍟 Papa Lovers 4x3 - Domicilio gratis</li>
+                        {% endif %}
+                        {% if pedido.recompensa_dado %}
+                        <li>🎲 Dado Dinámico - {{ pedido.recompensa_dado }}</li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Observaciones -->
+            {% if pedido.observaciones %}
+            <div class="card shadow-lg border-0 mb-4">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0"><i class="fas fa-sticky-note"></i> Observaciones</h5>
+                </div>
+                <div class="card-body">
+                    {{ pedido.observaciones|linebreaks }}
+                </div>
+            </div>
+            {% endif %}
+            
+            <div class="mt-3">
+                <a href="{% url 'usuarios:admin_pedidos' %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Volver a Pedidos
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

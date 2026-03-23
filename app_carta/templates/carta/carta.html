@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Buscador y Filtros -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <input type="text" id="buscador" class="form-control" placeholder="Buscar producto...">
+        </div>
+        <div class="col-md-4">
+            <select id="filtro-categoria" class="form-select">
+                <option value="">Todas las categorías</option>
+                {% for categoria in categorias %}
+                <option value="{{ categoria.id }}">{{ categoria.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2">
+            <a href="{% url 'carta:carta_pdf' %}" target="_blank" id="btn-pdf" class="btn w-100 fw-bold" style="background-color: var(--rosa); color: white;">
+                <i class="bi bi-file-pdf"></i> Descargar Menú
+            </a>
+        </div>
+    </div>
+
+    <!-- Lista de Productos -->
+    <div id="resultados-productos" class="row">
+        {% for categoria in categorias %}
+        <div class="categoria-seccion mb-4" data-categoria="{{ categoria.id }}">
+            <h3 class="mb-3" style="color: var(--dorado);">{{ categoria.nombre }}</h3>
+            {% if categoria.descripcion %}
+            <p class="text-muted mb-3">{{ categoria.descripcion }}</p>
+            {% endif %}
+            
+            <div class="row">
+                {% for producto in categoria.productos.all %}
+                <div class="col-md-4 mb-4 producto-item" 
+                     data-nombre="{{ producto.nombre|lower }}" 
+                     data-categoria-id="{{ producto.categoria.id }}">
+                    <div class="card h-100 shadow-sm">
+                        {% if producto.imagen %}
+                        <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}" style="height: 200px; object-fit: cover;">
+                        {% else %}
+                        <img src="{% static 'img/logo_patateria.png' %}" class="card-img-top" alt="{{ producto.nombre }}" style="height: 200px; object-fit: cover;">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ producto.nombre }}</h5>
+                            <p class="card-text">{{ producto.descripcion|truncatechars:100 }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="h5 mb-0" style="color: var(--dorado);">${{ producto.precio_formateado }}</span>
+                                {% if producto.es_recomendado %}
+                                <span class="badge bg-success">Recomendado</span>
+                                {% endif %}
+                            </div>
+                            {% if user.is_authenticated %}
+                            <button class="btn btn-sm btn-warning mt-2 w-100 agregar-carrito" data-producto-id="{{ producto.id }}" style="background-color: var(--dorado); border: none; color: white;">
+                                🛒 Agregar al Carrito
+                            </button>
+                            {% else %}
+                            <a href="{% url 'usuarios:login' %}" class="btn btn-sm btn-outline-secondary mt-2 w-100">Inicia sesión para comprar</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12">
+                    <p class="text-muted">No hay productos en esta categoría.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <p class="text-muted">No hay categorías disponibles.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const buscador = document.getElementById('buscador');
+    const filtroCategoria = document.getElementById('filtro-categoria');
+    const productos = document.querySelectorAll('.producto-item');
+    const btnPdf = document.getElementById('btn-pdf');
+    
+    // Manejar clic en botón PDF
+    if (btnPdf) {
+        btnPdf.addEventListener('click', function() {
+            // Cambiar texto inmediatamente
+            this.innerHTML = '⏳ Generando...';
+            this.style.opacity = '0.7';
+            
+            // Resetear después de 90 segundos (tiempo máximo de espera)
+            setTimeout(function() {
+                btnPdf.innerHTML = '<i class="bi bi-file-pdf"></i> Descargar Menú';
+                btnPdf.style.opacity = '1';
+            }, 90000);
+        });
+    }
+    
+    function filtrarProductos() {
+        const texto = buscador.value.toLowerCase();
+        const categoriaId = filtroCategoria.value;
+        
+        productos.forEach(producto => {
+            const nombre = producto.dataset.nombre;
+            const prodCategoriaId = producto.dataset.categoriaId;
+            
+            const coincideTexto = nombre.includes(texto);
+            const coincideCategoria = !categoriaId || prodCategoriaId === categoriaId;
+            
+            if (coincideTexto && coincideCategoria) {
+                producto.style.display = 'block';
+            } else {
+                producto.style.display = 'none';
+            }
+        });
+        
+        // Ocultar secciones de categorías vacías
+        document.querySelectorAll('.categoria-seccion').forEach(seccion => {
+            const tieneVisibles = Array.from(productos).some(p => 
+                p.closest('.categoria-seccion') === seccion && p.style.display !== 'none'
+            );
+            seccion.style.display = tieneVisibles ? 'block' : 'none';
+        });
+    }
+    
+    buscador.addEventListener('input', filtrarProductos);
+    filtroCategoria.addEventListener('change', filtrarProductos);
+});
+</script>
+
+<!-- Contador del Carrito -->
+{% if user.is_authenticated %}
+<div id="carrito-badge" class="position-fixed" style="bottom: 20px; right: 20px; z-index: 1000;">
+    <a href="{% url 'pedidos:ver_carrito' %}" class="btn btn-warning btn-lg rounded-circle shadow" style="background-color: var(--dorado); border: none; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
+        <span style="font-size: 1.5rem;">🛒</span>
+        <span id="carrito-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{ total_items_carrito|default:0 }}
+        </span>
+    </a>
+</div>
+
+<script>
+document.querySelectorAll('.agregar-carrito').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const productoId = this.dataset.productoId;
+        const csrfToken = '{{ csrf_token }}';
+        
+        fetch(`/pedidos/carrito/agregar/${productoId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrfToken,
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const badge = document.getElementById('carrito-count');
+                if (badge) {
+                    badge.textContent = data.total_items;
+                }
+                alert(data.message + ' 🛒');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al agregar al carrito');
+        });
+    });
+});
+</script>
+{% endif %}
+{% endblock %}

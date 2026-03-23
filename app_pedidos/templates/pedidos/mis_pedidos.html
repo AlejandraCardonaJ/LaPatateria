@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold" style="color: #e5a221;">📜 Mis Pedidos</h1>
+        <p class="text-muted">Historial de tus pedidos en La Patatería</p>
+    </div>
+
+    {% if not pedidos %}
+    <div class="text-center py-5">
+        <div class="display-1 mb-3">🍟</div>
+        <h3>No tienes pedidos aún</h3>
+        <p class="text-muted">¡Haz tu primer pedido en La Patatería!</p>
+        <a href="{% url 'carta:home' %}" class="btn btn-warning mt-3" style="background-color: #e5a221; border: none;">
+            Ver Carta
+        </a>
+    </div>
+    {% else %}
+    <div class="row">
+        {% for pedido in pedidos %}
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span><strong>Pedido #{{ forloop.counter }}</strong></span>
+                    <span class="badge bg-{% if pedido.estado == 'PENDIENTE' %}warning{% elif pedido.estado == 'CONFIRMADO' %}info{% elif pedido.estado == 'ENTREGADO' %}success{% else %}secondary{% endif %}">
+                        {{ pedido.get_estado_display }}
+                    </span>
+                </div>
+                <div class="card-body">
+                    <p class="mb-1"><strong>Fecha:</strong> {{ pedido.fecha_pedido|date:"d/m/Y H:i" }}</p>
+                    <p class="mb-1"><strong>Tipo:</strong> 
+                        {% if pedido.tipo_entrega == 'TIENDA' %}
+                            🏪 Recoger en tienda
+                        {% else %}
+                            🚚 Domicilio
+                        {% endif %}
+                    </p>
+                    <p class="mb-1"><strong>Total:</strong> <span style="color: #e5a221; font-weight: bold;">${{ pedido.total }}</span></p>
+                    
+                    <!-- Recompensas -->
+                    {% if pedido.aplica_papa_cumpleañera or pedido.aplica_papa_oclock or pedido.aplica_4x3 or pedido.recompensa_dado %}
+                    <div class="mt-2">
+                        <small class="text-muted">Recompensas:</small>
+                        <div class="d-flex flex-wrap gap-1 mt-1">
+                            {% if pedido.recompensa_dado %}
+                            <span class="badge bg-warning" style="color: #333;">🎲 {{ pedido.recompensa_dado }}</span>
+                            {% endif %}
+                            {% if pedido.aplica_papa_cumpleañera %}
+                            <span class="badge bg-info">🎂 Papa Cumpleañera</span>
+                            {% endif %}
+                            {% if pedido.aplica_papa_oclock %}
+                            <span class="badge bg-warning" style="color: #333;">⏰ Papa O'clock</span>
+                            {% endif %}
+                            {% if pedido.aplica_4x3 %}
+                            <span class="badge bg-success">🍟 Papa Lovers 4x3</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <hr>
+                    <small class="text-muted">Productos:</small>
+                    <ul class="mb-0 small">
+                        {% for detalle in pedido.detalles.all %}
+                        <li>{{ detalle.cantidad }}x {{ detalle.producto_nombre }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

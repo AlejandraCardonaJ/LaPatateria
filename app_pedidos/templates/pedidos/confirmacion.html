@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <div class="display-1 mb-3">🎉</div>
+        <h1 class="fw-bold" style="color: #e5a221;">¡Pedido Confirmado!</h1>
+        <p class="text-muted">Tu pedido #{{ numero_pedido }} ha sido registrado exitosamente</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Dados -->
+            {% if pedido.tipo_entrega == 'DOMICILIO' and pedido.resultado_dado %}
+            <div class="card shadow-lg mb-4" style="border-color: #e5a221;">
+                <div class="card-header" style="background-color: #e5a221; color: white;">
+                    <h4 class="mb-0">🎲 ¡Gira el Dado!</h4>
+                </div>
+                <div class="card-body text-center py-5">
+                    <div id="dadoContainer" class="mb-4">
+                        <div id="dado" class="dado-animation">
+                            <span class="display-1">🎲</span>
+                        </div>
+                    </div>
+                    
+                    <div id="resultadoDado" style="display: none;">
+                        <h3 class="mb-3">¡Tu recompensa!</h3>
+                        <div class="display-4 mb-3">{{ pedido.resultado_dado }}️⃣</div>
+                        <div class="alert alert-success fs-5">
+                            <strong>{{ pedido.recompensa_dado }}</strong>
+                        </div>
+                        <p class="text-muted">Se aplicará en este pedido junto con tu entrega</p>
+                    </div>
+                    
+                    <button id="btnTirarDado" class="btn btn-warning btn-lg" style="background-color: #e5a221; border: none;">
+                        🎲 Tirar Dado
+                    </button>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Recompensas de Fidelización -->
+            {% if pedido.aplica_papa_cumpleañera or pedido.aplica_papa_oclock or pedido.aplica_4x3 %}
+            <div class="card shadow-sm mb-4">
+                <div class="card-header" style="background-color: #d595ab; color: white;">
+                    <h5 class="mb-0">🎁 Recompensas Aplicadas</h5>
+                </div>
+                <div class="card-body">
+                    {% if pedido.aplica_papa_cumpleañera %}
+                    <div class="alert alert-info mb-2">
+                        🎂 <strong>Papa Cumpleañera:</strong> ¡Envío gratis en tu cumple!
+                    </div>
+                    {% endif %}
+                    
+                    {% if pedido.aplica_papa_oclock %}
+                    <div class="alert alert-warning mb-2">
+                        ⏰ <strong>Papa O'clock:</strong> ¡Envío gratis en los primeros 2 horas!
+                    </div>
+                    {% endif %}
+                    
+                    {% if pedido.aplica_4x3 %}
+                    <div class="alert alert-success mb-0">
+                        🍟 <strong>Papa Lovers 4x3:</strong> Tu 4º pedido de domicilio es gratis (máximo $60.000)
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Resumen del Pedido -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header" style="background-color: #333; color: white;">
+                    <h5 class="mb-0">📋 Resumen del Pedido</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Tipo de Entrega:</strong> 
+                                {% if pedido.tipo_entrega == 'TIENDA' %}
+                                    🏪 Recoger en tienda
+                                {% else %}
+                                    🚚 Entrega a domicilio
+                                {% endif %}
+                            </p>
+                            <p><strong>Total:</strong> <span style="color: #e5a221; font-size: 1.2em;">${{ pedido.total }}</span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Fecha:</strong> {{ pedido.fecha_pedido|date:"d/m/Y H:i" }}</p>
+                            <p><strong>Estado:</strong> <span class="badge bg-success">{{ pedido.get_estado_display }}</span></p>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <h6>Productos:</h6>
+                    <ul class="list-group">
+                        {% for detalle in pedido.detalles.all %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ detalle.producto_nombre }}
+                            <span class="badge bg-warning rounded-pill" style="color: #333;">x{{ detalle.cantidad }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <a href="{% url 'carta:home' %}" class="btn btn-warning" style="background-color: #e5a221; border: none;">
+                    🏠 Volver al Inicio
+                </a>
+                <a href="{% url 'pedidos:mis_pedidos' %}" class="btn btn-outline-secondary">
+                    📜 Mis Pedidos
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.dado-animation {
+    font-size: 100px;
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(15deg); }
+    50% { transform: rotate(-15deg); }
+    75% { transform: rotate(10deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.dado-detener {
+    animation: none;
+}
+</style>
+
+<script>
+var resultadoDado = {{ pedido.resultado_dado|default:1 }};
+if (resultadoDado === null || resultadoDado === undefined) {
+    resultadoDado = 1;
+}
+document.getElementById('btnTirarDado')?.addEventListener('click', function() {
+    const btn = this;
+    const dado = document.getElementById('dado');
+    const resultado = document.getElementById('resultadoDado');
+    
+    btn.disabled = true;
+    btn.innerHTML = '🎲 Tirando...';
+    
+    // Animación del dado
+    let counter = 0;
+    const interval = setInterval(function() {
+        const dice = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+        dado.innerHTML = '<span class="display-1">' + dice[Math.floor(Math.random() * 6)] + '</span>';
+        counter++;
+        
+        if (counter >= 10) {
+            clearInterval(interval);
+            
+            // Mostrar resultado final
+            const diceFinal = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+            dado.innerHTML = '<span class="display-1">' + diceFinal[resultadoDado - 1] + '</span>';
+            dado.classList.add('dado-detener');
+            
+            resultado.style.display = 'block';
+            btn.style.display = 'none';
+        }
+    }, 100);
+});
+</script>
+{% endblock %}

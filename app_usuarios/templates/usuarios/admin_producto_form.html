@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}{% if accion == 'crear' %}Nuevo Producto{% else %}Editar Producto{% endif %} | La Patatería{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <div class="card shadow-lg border-0">
+                <div class="card-body text-center">
+                    <img src="{% static 'img/logo_patateria.png' %}" alt="Admin" class="mb-3" height="60">
+                    <h5>{{ user.username }}</h5>
+                    <span class="badge bg-warning text-dark">Administrador</span>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <a href="{% url 'usuarios:admin_panel' %}" class="text-decoration-none text-dark">
+                            <i class="fas fa-home"></i> Inicio
+                        </a>
+                    </li>
+                    <li class="list-group-item active bg-dark">
+                        <a href="{% url 'usuarios:admin_productos' %}" class="text-decoration-none text-white">
+                            <i class="fas fa-utensils"></i> Gestionar Carta
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{% url 'usuarios:admin_categorias' %}" class="text-decoration-none text-dark">
+                            <i class="fas fa-tags"></i> Categorías
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{% url 'usuarios:admin_fidelizacion' %}" class="text-decoration-none text-dark">
+                            <i class="fas fa-gift"></i> Fidelización
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{% url 'usuarios:admin_clientes' %}" class="text-decoration-none text-dark">
+                            <i class="fas fa-users"></i> Clientes
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{% url 'usuarios:admin_pedidos' %}" class="text-decoration-none text-dark">
+                            <i class="fas fa-shopping-cart"></i> Pedidos
+                        </a>
+                    </li>
+                </ul>
+                <div class="card-footer">
+                    <a href="{% url 'usuarios:logout' %}" class="btn btn-outline-danger btn-sm w-100">
+                        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Contenido Principal -->
+        <div class="col-md-9">
+            <h2 class="mb-4">
+                <i class="fas fa-utensils"></i> 
+                {% if accion == 'crear' %}Nuevo Producto{% else %}Editar Producto{% endif %}
+            </h2>
+            
+            <div class="card shadow-lg border-0">
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre del producto *</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" 
+                                   value="{{ producto.nombre|default:'' }}" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="categoria" class="form-label">Categoría *</label>
+                            <select class="form-select" id="categoria" name="categoria" required>
+                                <option value="">Selecciona una categoría</option>
+                                {% for cat in categorias %}
+                                <option value="{{ cat.id }}" {% if producto.categoria_id == cat.id %}selected{% endif %}>
+                                    {{ cat.nombre }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="precio" class="form-label">Precio ($) *</label>
+                            <input type="number" class="form-control" id="precio" name="precio" 
+                                   value="{{ producto.precio|default:'' }}" min="0" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="descripcion" name="descripcion" rows="3">{{ producto.descripcion|default:'' }}</textarea>
+                        </div>
+                        
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="disponible" name="disponible" 
+                                   {% if producto.disponible or accion == 'crear' %}checked{% endif %}>
+                            <label class="form-check-label" for="disponible">
+                                Producto disponible
+                            </label>
+                        </div>
+                        
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="es_recomendado" name="es_recomendado" 
+                                   {% if producto.es_recomendado %}checked{% endif %}>
+                            <label class="form-check-label" for="es_recomendado">
+                                Producto recomendado (se muestra en el banner)
+                            </label>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> 
+                                {% if accion == 'crear' %}Crear Producto{% else %}Guardar Cambios{% endif %}
+                            </button>
+                            <a href="{% url 'usuarios:admin_productos' %}" class="btn btn-secondary">
+                                Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
