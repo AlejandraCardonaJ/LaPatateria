@@ -21,6 +21,13 @@ def main():
     except Exception as e:
         print(f"❌ Error cargando app_carta.json: {e}")
 
+    # Intentar cargar fidelización, pero no detener el proceso si falla
+    print("📦 Intentando cargar programas de fidelización...")
+    try:
+        call_command('loaddata', 'app_fidelizacion.json', verbosity=1)
+    except Exception as e:
+        print(f"⚠️ No se pudo cargar app_fidelizacion.json: {e}. Se continuará sin datos de fidelización.")
+
     mostrar_conteos()
 
 def mostrar_conteos():
