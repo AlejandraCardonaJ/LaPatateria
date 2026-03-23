@@ -15,7 +15,7 @@
   "pk": 2,
   "fields": {
     "nombre": "SOPAS",
-    "descripcion": "Sabores calientes y reconfortantes, el inicio ideal para los d�as de lluvia en Manizales.",
+    "descripcion": "Sabores calientes y reconfortantes, el inicio ideal para los d├¡as de lluvia en Manizales.",
     "orden": 2,
     "activa": true,
     "fecha_creacion": "2026-03-11T03:21:55.049Z"
@@ -26,7 +26,7 @@
   "pk": 3,
   "fields": {
     "nombre": "PATATAS",
-    "descripcion": "�De que forma te gustan m�s?",
+    "descripcion": "┬┐De que forma te gustan m├ís?",
     "orden": 3,
     "activa": true,
     "fecha_creacion": "2026-03-11T03:31:23.900Z"
@@ -37,7 +37,7 @@
   "pk": 4,
   "fields": {
     "nombre": "SABORES DEL MUNDO",
-    "descripcion": "Un pasaporte directo al sabor. Recetas ic�nicas de los cinco continentes fusionadas con la versatilidad de nuestra mejor patata.",
+    "descripcion": "Un pasaporte directo al sabor. Recetas ic├│nicas de los cinco continentes fusionadas con la versatilidad de nuestra mejor patata.",
     "orden": 4,
     "activa": true,
     "fecha_creacion": "2026-03-11T03:36:13.396Z"
@@ -48,7 +48,7 @@
   "pk": 5,
   "fields": {
     "nombre": "SABORES DEL MAR",
-    "descripcion": "Toda la frescura de la costa en una sola patata. Una exquisita combinaci�n de frutos del mar, salsas cremosas y el toque c�trico perfecto para transportarte a la playa con cada bocado.",
+    "descripcion": "Toda la frescura de la costa en una sola patata. Una exquisita combinaci├│n de frutos del mar, salsas cremosas y el toque c├¡trico perfecto para transportarte a la playa con cada bocado.",
     "orden": 5,
     "activa": true,
     "fecha_creacion": "2026-03-11T04:11:05.040Z"
@@ -59,7 +59,7 @@
   "pk": 6,
   "fields": {
     "nombre": "SABORES VEGETARIANOS",
-    "descripcion": "Donde el campo se encuentra con la patata. Una explosi�n de frescura con vegetales seleccionados, quesos artesanales y semillas crujientes que demuestran que lo saludable tambi�n es irresistible.",
+    "descripcion": "Donde el campo se encuentra con la patata. Una explosi├│n de frescura con vegetales seleccionados, quesos artesanales y semillas crujientes que demuestran que lo saludable tambi├®n es irresistible.",
     "orden": 6,
     "activa": true,
     "fecha_creacion": "2026-03-11T04:17:05.847Z"
@@ -70,7 +70,7 @@
   "pk": 7,
   "fields": {
     "nombre": "PIZZAS",
-    "descripcion": "1 - Elige patatas en cascos o patatas a la francesa. \r\n2- Tama�o est�ndar de 30 cm. \r\n3- Elige el sabor que prefieras.",
+    "descripcion": "1 - Elige patatas en cascos o patatas a la francesa. \r\n2- Tama├▒o est├índar de 30 cm. \r\n3- Elige el sabor que prefieras.",
     "orden": 7,
     "activa": true,
     "fecha_creacion": "2026-03-11T04:22:14.294Z"
@@ -81,7 +81,7 @@
   "pk": 8,
   "fields": {
     "nombre": "ESPECIALES",
-    "descripcion": "Nuestros cortes de carne m�s especial para t�.",
+    "descripcion": "Nuestros cortes de carne m├ís especial para t├¡.",
     "orden": 7,
     "activa": true,
     "fecha_creacion": "2026-03-11T04:33:15.522Z"
@@ -92,7 +92,7 @@
   "pk": 9,
   "fields": {
     "nombre": "HAMBURGUESAS TRADICIONALES",
-    "descripcion": "Nuestras Burger son muy especiales, con pan de papa �nico y puedes armar tu combo como m�s te guste, con papas o incluso cerveza.",
+    "descripcion": "Nuestras Burger son muy especiales, con pan de papa ├║nico y puedes armar tu combo como m├ís te guste, con papas o incluso cerveza.",
     "orden": 9,
     "activa": true,
     "fecha_creacion": "2026-03-11T04:38:54.015Z"
@@ -103,7 +103,7 @@
   "pk": 10,
   "fields": {
     "nombre": "HAMBURGUESAS ESPECIALES",
-    "descripcion": "Nuestras Burger son muy especiales, con pan de papa �nico y puedes armar tu combo como m�s te guste, con papas o incluso cerveza",
+    "descripcion": "Nuestras Burger son muy especiales, con pan de papa ├║nico y puedes armar tu combo como m├ís te guste, con papas o incluso cerveza",
     "orden": 10,
     "activa": true,
     "fecha_creacion": "2026-03-11T04:44:44.825Z"
@@ -114,7 +114,7 @@
   "pk": 11,
   "fields": {
     "nombre": "INFANTIL",
-    "descripcion": "Peque�as patatas, grandes aventuras! Porciones perfectas y sabores suaves dise�ados especialmente para los mini exploradores de la casa",
+    "descripcion": "Peque├▒as patatas, grandes aventuras! Porciones perfectas y sabores suaves dise├▒ados especialmente para los mini exploradores de la casa",
     "orden": 11,
     "activa": true,
     "fecha_creacion": "2026-03-11T04:49:57.653Z"
@@ -125,7 +125,7 @@
   "pk": 12,
   "fields": {
     "nombre": "POSTRES",
-    "descripcion": "Endulza un poco tu paladar y coraz�n.",
+    "descripcion": "Endulza un poco tu paladar y coraz├│n.",
     "orden": 12,
     "activa": true,
     "fecha_creacion": "2026-03-11T04:55:45.331Z"
@@ -159,7 +159,7 @@
   "fields": {
     "categoria": 1,
     "nombre": "PORK MAICITOS",
-    "descripcion": "Maicitos con queso, costilla desmechada, arepas de ma�z amarillo, criollas tostadas y tocineta crocante.",
+    "descripcion": "Maicitos con queso, costilla desmechada, arepas de ma├¡z amarillo, criollas tostadas y tocineta crocante.",
     "precio": "26500",
     "imagen": "img/carta/productos/pork_maicitos.jpg",
     "disponible": true,
@@ -173,7 +173,7 @@
   "fields": {
     "categoria": 1,
     "nombre": "MOLCAJETE GUACAMOLE TEXANO",
-    "descripcion": "Guacamole fresquito, acompa�ado de nachos de ma�z, queso fresco, pico de gallo, cilantro y pulled pork.",
+    "descripcion": "Guacamole fresquito, acompa├▒ado de nachos de ma├¡z, queso fresco, pico de gallo, cilantro y pulled pork.",
     "precio": "26500",
     "imagen": "img/carta/productos/molcajete_guacamole.jpg",
     "disponible": true,
@@ -201,7 +201,7 @@
   "fields": {
     "categoria": 1,
     "nombre": "NACHOS DE LA CASA",
-    "descripcion": "Cl�sicos nachos de tortilla de ma�z, pulled pork, pico de gallo, guacamole, crema agria, salsa cremosa de ajo, queso fresco y jalape�os encurtidos (opcional).",
+    "descripcion": "Cl├ísicos nachos de tortilla de ma├¡z, pulled pork, pico de gallo, guacamole, crema agria, salsa cremosa de ajo, queso fresco y jalape├▒os encurtidos (opcional).",
     "precio": "28500",
     "imagen": "img/carta/productos/nachos_casa.jpg",
     "disponible": true,
@@ -215,7 +215,7 @@
   "fields": {
     "categoria": 1,
     "nombre": "CRIOLLAS NAPOLITANAS",
-    "descripcion": "Papitas criollas crocantes, ba�adas en salsa napolitana y queso parmesano.",
+    "descripcion": "Papitas criollas crocantes, ba├▒adas en salsa napolitana y queso parmesano.",
     "precio": "13000",
     "imagen": "img/carta/productos/criollas-napolitanas.jpg",
     "disponible": true,
@@ -229,7 +229,7 @@
   "fields": {
     "categoria": 1,
     "nombre": "PAPAS BRAVAS",
-    "descripcion": "Papas en casco, ba�adas en salsa dinam�ta y salsa de ajo rostizado, acompa�ado de queso fresco.",
+    "descripcion": "Papas en casco, ba├▒adas en salsa dinam├¡ta y salsa de ajo rostizado, acompa├▒ado de queso fresco.",
     "precio": "11500",
     "imagen": "img/carta/productos/papas_casco.jpg",
     "disponible": true,
@@ -299,7 +299,7 @@
   "fields": {
     "categoria": 2,
     "nombre": "SOPA MEXICANA",
-    "descripcion": "Crema de tomate, servida con aguacate, totopos, queso, pollo desmechado, y ma�z.",
+    "descripcion": "Crema de tomate, servida con aguacate, totopos, queso, pollo desmechado, y ma├¡z.",
     "precio": "25500",
     "imagen": "img/carta/productos/sopa_mexicana.jpg",
     "disponible": true,
@@ -340,7 +340,7 @@
   "pk": 15,
   "fields": {
     "categoria": 3,
-    "nombre": "PUR�",
+    "nombre": "PUR├ë",
     "descripcion": "Otra manera de disfrutar tu sabor favorito.",
     "precio": "0",
     "imagen": "img/carta/productos/pure.jpg",
@@ -369,7 +369,7 @@
   "fields": {
     "categoria": 3,
     "nombre": "GRAN ENSALADA",
-    "descripcion": "Lechuga, salsa de la casa, champi�ones, pico de gallo, maicitos, y queso parmesano.",
+    "descripcion": "Lechuga, salsa de la casa, champi├▒ones, pico de gallo, maicitos, y queso parmesano.",
     "precio": "0",
     "imagen": "img/carta/productos/emnsalada.jpg",
     "disponible": true,
@@ -383,7 +383,7 @@
   "fields": {
     "categoria": 4,
     "nombre": "POLLO ORIENTAL",
-    "descripcion": "Pechuga de pollo con champi�ones, br�coli y zanahoria en salsa teriyaki con ajonjol� y la base de tu elecci�n.",
+    "descripcion": "Pechuga de pollo con champi├▒ones, br├│coli y zanahoria en salsa teriyaki con ajonjol├¡ y la base de tu elecci├│n.",
     "precio": "31500",
     "imagen": "img/carta/productos/pollo_teriyaki.jpg",
     "disponible": true,
@@ -397,7 +397,7 @@
   "fields": {
     "categoria": 4,
     "nombre": "ITALIANA",
-    "descripcion": "Macarrones en salsa de quesos, pollo cremoso, queso parmesano, tocineta y la base de tu elecci�n terminada con cilantro fresco.",
+    "descripcion": "Macarrones en salsa de quesos, pollo cremoso, queso parmesano, tocineta y la base de tu elecci├│n terminada con cilantro fresco.",
     "precio": "38000",
     "imagen": "img/carta/productos/italiana.jpg",
     "disponible": true,
@@ -411,7 +411,7 @@
   "fields": {
     "categoria": 4,
     "nombre": "POLLO AL CURRY",
-    "descripcion": "Pollo cremoso en salsa de curry, vegetales frescos salteados con limon y la base de tu elecci�n.",
+    "descripcion": "Pollo cremoso en salsa de curry, vegetales frescos salteados con limon y la base de tu elecci├│n.",
     "precio": "36000",
     "imagen": "img/carta/productos/pollo_curry.jpg",
     "disponible": true,
@@ -425,7 +425,7 @@
   "fields": {
     "categoria": 4,
     "nombre": "AMERICANA",
-    "descripcion": "Ma�z en salsa de quesos, con pollo cremoso, tocineta, cilantro y la base de tu elecci�n.",
+    "descripcion": "Ma├¡z en salsa de quesos, con pollo cremoso, tocineta, cilantro y la base de tu elecci├│n.",
     "precio": "38000",
     "imagen": "img/carta/productos/Captura_de_pantalla_2026-03-10_224525.png",
     "disponible": true,
@@ -439,7 +439,7 @@
   "fields": {
     "categoria": 4,
     "nombre": "MEXICANA EN POLLO",
-    "descripcion": "Pechuga de pollo en salsa de tomates rostizados con chipotle, salteado con cebolla, acompa�ado de pico de gallo, nachos de ma�z, crema agria, guacamole\r\ny la base de tu elecci�n.",
+    "descripcion": "Pechuga de pollo en salsa de tomates rostizados con chipotle, salteado con cebolla, acompa├▒ado de pico de gallo, nachos de ma├¡z, crema agria, guacamole\r\ny la base de tu elecci├│n.",
     "precio": "39900",
     "imagen": "img/carta/productos/mexicana_pollo.jpg",
     "disponible": true,
@@ -453,7 +453,7 @@
   "fields": {
     "categoria": 4,
     "nombre": "TORRE EIFFLEL EN POLLO",
-    "descripcion": "Suculento fondue de quesos, servido con pechuga cremosa en champi�ones, ensalada y la base de tu elecci�n.",
+    "descripcion": "Suculento fondue de quesos, servido con pechuga cremosa en champi├▒ones, ensalada y la base de tu elecci├│n.",
     "precio": "39900",
     "imagen": "img/carta/productos/fomndue_pollo.jpg",
     "disponible": true,
@@ -467,7 +467,7 @@
   "fields": {
     "categoria": 4,
     "nombre": "POLLO CALLEJERO",
-    "descripcion": "Pechuga de pollo ba�ada en chimichurri cremoso y salsa de ajo, queso fresco, viruta de papa, lechuga, ma�z y papas en cascos, francesas o criollitas.",
+    "descripcion": "Pechuga de pollo ba├▒ada en chimichurri cremoso y salsa de ajo, queso fresco, viruta de papa, lechuga, ma├¡z y papas en cascos, francesas o criollitas.",
     "precio": "29000",
     "imagen": "img/carta/productos/pollo_callejero.jpg",
     "disponible": true,
@@ -481,7 +481,7 @@
   "fields": {
     "categoria": 4,
     "nombre": "LOMO ORIENTAL",
-    "descripcion": "Lomo de res con champi�ones, br�coli y zanahoria en salsa teriyaki con ajonjol� y la base de tu elecci�n.",
+    "descripcion": "Lomo de res con champi├▒ones, br├│coli y zanahoria en salsa teriyaki con ajonjol├¡ y la base de tu elecci├│n.",
     "precio": "39000",
     "imagen": "img/carta/productos/lomo_oriental.jpg",
     "disponible": true,
@@ -495,7 +495,7 @@
   "fields": {
     "categoria": 4,
     "nombre": "LOMO INKA",
-    "descripcion": "Res en salsa de lomo saltado, cebolla, tomates rostizados, arroz y la base de tu elecci�n.",
+    "descripcion": "Res en salsa de lomo saltado, cebolla, tomates rostizados, arroz y la base de tu elecci├│n.",
     "precio": "38500",
     "imagen": "img/carta/productos/lomo_inka.jpg",
     "disponible": true,
@@ -509,7 +509,7 @@
   "fields": {
     "categoria": 4,
     "nombre": "LOMO AL CURRY",
-    "descripcion": "Res en salsa cremosa de curry, vegetales frescos salteados con lim�n y la base de tu elecci�n.",
+    "descripcion": "Res en salsa cremosa de curry, vegetales frescos salteados con lim├│n y la base de tu elecci├│n.",
     "precio": "39900",
     "imagen": "img/carta/productos/lomo_curry.jpg",
     "disponible": true,
@@ -523,7 +523,7 @@
   "fields": {
     "categoria": 4,
     "nombre": "TORRE EIFFLE EN RES",
-    "descripcion": "Suculento fondue de quesos, servido con res, champi�ones, salsa demi-glace, ensalada y la base de tu elecci�n.",
+    "descripcion": "Suculento fondue de quesos, servido con res, champi├▒ones, salsa demi-glace, ensalada y la base de tu elecci├│n.",
     "precio": "48200",
     "imagen": "img/carta/productos/fondue_res.jpg",
     "disponible": true,
@@ -537,7 +537,7 @@
   "fields": {
     "categoria": 4,
     "nombre": "MEXICANA EN LOMO",
-    "descripcion": "Res en salsa de tomates rostizados con chipotle, salteado con cebolla y acompa�ado de pico de gallo, nachos de ma�z, crema agria, guacamole y la base de tu elecci�n.",
+    "descripcion": "Res en salsa de tomates rostizados con chipotle, salteado con cebolla y acompa├▒ado de pico de gallo, nachos de ma├¡z, crema agria, guacamole y la base de tu elecci├│n.",
     "precio": "43000",
     "imagen": "img/carta/productos/mexicana_lomo.jpg",
     "disponible": true,
@@ -551,7 +551,7 @@
   "fields": {
     "categoria": 4,
     "nombre": "BARBACOA TEXANA",
-    "descripcion": "Costillas de cerdo deshuesadas ba�adas en salsa BBQ Jack Daniel's, servidas con queso cheddar y la base de tu elecci�n.",
+    "descripcion": "Costillas de cerdo deshuesadas ba├▒adas en salsa BBQ Jack Daniel's, servidas con queso cheddar y la base de tu elecci├│n.",
     "precio": "34000",
     "imagen": "img/carta/productos/barbacoa.jpg",
     "disponible": true,
@@ -565,7 +565,7 @@
   "fields": {
     "categoria": 4,
     "nombre": "DE MI TIERRA",
-    "descripcion": "Cerdo desmechado en cocci�n lenta con salsita criolla, pur� de pl�tano maduro, crema agria, aguacate, pico de gallo, cilantro fresco y la base de tu elecci�n.",
+    "descripcion": "Cerdo desmechado en cocci├│n lenta con salsita criolla, pur├® de pl├ítano maduro, crema agria, aguacate, pico de gallo, cilantro fresco y la base de tu elecci├│n.",
     "precio": "38500",
     "imagen": "img/carta/productos/tierra.jpg",
     "disponible": true,
@@ -592,10 +592,10 @@
   "pk": 33,
   "fields": {
     "categoria": 5,
-    "nombre": "ISLE�O",
-    "descripcion": "Mix de camarones, calamar, y palmitos de cangrejo servidos en salsa marinera, con cilantro fresco, patac�n y la base de tu elecci�n.",
+    "nombre": "ISLE├æO",
+    "descripcion": "Mix de camarones, calamar, y palmitos de cangrejo servidos en salsa marinera, con cilantro fresco, patac├│n y la base de tu elecci├│n.",
     "precio": "49900",
-    "imagen": "img/carta/productos/isle�o.jpg",
+    "imagen": "img/carta/productos/isle├▒o.jpg",
     "disponible": true,
     "es_recomendado": true,
     "fecha_creacion": "2026-03-11T04:15:07.553Z"
@@ -607,7 +607,7 @@
   "fields": {
     "categoria": 5,
     "nombre": "ARROZ MARINERO CALDOSO",
-    "descripcion": "Mix de camarones, calamar y palmitos de cangrejo en arroz caldoso de tomate italiano, con pita al pesto y papa en cascos acompa�ado de cremoso de ajo rostizado.",
+    "descripcion": "Mix de camarones, calamar y palmitos de cangrejo en arroz caldoso de tomate italiano, con pita al pesto y papa en cascos acompa├▒ado de cremoso de ajo rostizado.",
     "precio": "41000",
     "imagen": "img/carta/productos/marinero_caldoso.jpg",
     "disponible": true,
@@ -621,7 +621,7 @@
   "fields": {
     "categoria": 6,
     "nombre": "TORRE EIFFEL VEGETARIANO",
-    "descripcion": "Suculento Fondue de quesos, prote�na vegetariana, champi�ones, ensalada y la\r\nbase de tu elecci�n.",
+    "descripcion": "Suculento Fondue de quesos, prote├¡na vegetariana, champi├▒ones, ensalada y la\r\nbase de tu elecci├│n.",
     "precio": "45000",
     "imagen": "img/carta/productos/fondue_vegetariano.jpg",
     "disponible": true,
@@ -635,7 +635,7 @@
   "fields": {
     "categoria": 6,
     "nombre": "ARROZ DE SETAS Y PAPAS",
-    "descripcion": "Arroz en salsa de tomates, rostizados, champi�ones, albahaca fresca, queso parmesano y papas en cascos.",
+    "descripcion": "Arroz en salsa de tomates, rostizados, champi├▒ones, albahaca fresca, queso parmesano y papas en cascos.",
     "precio": "28000",
     "imagen": "img/carta/productos/arroz_setas.jpg",
     "disponible": true,
@@ -649,7 +649,7 @@
   "fields": {
     "categoria": 6,
     "nombre": "MEXICANA VEGETARIANA",
-    "descripcion": "Prote�na vegetariana en salsa de tomates rostizados con chiplote, salteado con cebolla y acompa�ado de pico de gallo, nachos de ma�z, crema agria, guacamole y la base de tu elecci�n.",
+    "descripcion": "Prote├¡na vegetariana en salsa de tomates rostizados con chiplote, salteado con cebolla y acompa├▒ado de pico de gallo, nachos de ma├¡z, crema agria, guacamole y la base de tu elecci├│n.",
     "precio": "41000",
     "imagen": "img/carta/productos/mexicana_vegetariana.jpg",
     "disponible": true,
@@ -663,7 +663,7 @@
   "fields": {
     "categoria": 7,
     "nombre": "PIZZA DE COSTILLA",
-    "descripcion": "Costilla deshuesada en salsa BBQ en cocci�n lenta y queso, sobre la base de tu elecci�n.",
+    "descripcion": "Costilla deshuesada en salsa BBQ en cocci├│n lenta y queso, sobre la base de tu elecci├│n.",
     "precio": "58000",
     "imagen": "img/carta/productos/pizza_costilla.jpg",
     "disponible": true,
@@ -677,7 +677,7 @@
   "fields": {
     "categoria": 7,
     "nombre": "PIZZA MEXICANA",
-    "descripcion": "Pechuga de pollo en salsa de tomates rostizados con chipotle, salteado con cebolla y acompa�ado de nachos de ma�z, crema agria y aguacate sobre la base de tu elecci�n.",
+    "descripcion": "Pechuga de pollo en salsa de tomates rostizados con chipotle, salteado con cebolla y acompa├▒ado de nachos de ma├¡z, crema agria y aguacate sobre la base de tu elecci├│n.",
     "precio": "58000",
     "imagen": "img/carta/productos/pizza_mexicana.jpg",
     "disponible": true,
@@ -691,7 +691,7 @@
   "fields": {
     "categoria": 7,
     "nombre": "PIZZA TERIYAKI",
-    "descripcion": "Pollo cremoso en salsa teriyaki, champi�ones, tocineta y queso con las base de tu elecci�n.",
+    "descripcion": "Pollo cremoso en salsa teriyaki, champi├▒ones, tocineta y queso con las base de tu elecci├│n.",
     "precio": "60000",
     "imagen": "img/carta/productos/pizza_teriyaki.jpg",
     "disponible": true,
@@ -705,7 +705,7 @@
   "fields": {
     "categoria": 7,
     "nombre": "PIZZA DE CHICHARRON ACARAMELADO",
-    "descripcion": "Chicharron carnudo en salsa de sirope de caramelo y lim�n mandarino, servido\r\nsobre queso y la base de tu elecci�n.",
+    "descripcion": "Chicharron carnudo en salsa de sirope de caramelo y lim├│n mandarino, servido\r\nsobre queso y la base de tu elecci├│n.",
     "precio": "60000",
     "imagen": "img/carta/productos/pizza_chicharron.jpg",
     "disponible": true,
@@ -719,7 +719,7 @@
   "fields": {
     "categoria": 8,
     "nombre": "GARDEL MUY ARGENTINA",
-    "descripcion": "Un homenaje al sabor argentino: 300 gramos de jugoso churrasco de res, coronado con queso doble crema derretido, cebolla dorada y un toque de chimichurri aut�ntico, todo servido sobre papas a tu elecci�n.",
+    "descripcion": "Un homenaje al sabor argentino: 300 gramos de jugoso churrasco de res, coronado con queso doble crema derretido, cebolla dorada y un toque de chimichurri aut├®ntico, todo servido sobre papas a tu elecci├│n.",
     "precio": "43000",
     "imagen": "img/carta/productos/gardel.jpg",
     "disponible": true,
@@ -733,7 +733,7 @@
   "fields": {
     "categoria": 8,
     "nombre": "COSTILLAS DE CERDO",
-    "descripcion": "500 gramos de Costilla de Cerdo braseada en salsa BBQ, cebolla crispy y la papa de tu elecci�n.",
+    "descripcion": "500 gramos de Costilla de Cerdo braseada en salsa BBQ, cebolla crispy y la papa de tu elecci├│n.",
     "precio": "55000",
     "imagen": "img/carta/productos/costillas_cerdo.jpg",
     "disponible": true,
@@ -747,7 +747,7 @@
   "fields": {
     "categoria": 8,
     "nombre": "SALMONCITO",
-    "descripcion": "Salm�n a la parrilla acompa�ado de arroz cremoso con champi�ones, gran ensalada y las papas de tu elecci�n.",
+    "descripcion": "Salm├│n a la parrilla acompa├▒ado de arroz cremoso con champi├▒ones, gran ensalada y las papas de tu elecci├│n.",
     "precio": "58500",
     "imagen": "img/carta/productos/salmoncito.jpg",
     "disponible": true,
@@ -760,7 +760,7 @@
   "pk": 45,
   "fields": {
     "categoria": 9,
-    "nombre": "CL�SICA",
+    "nombre": "CL├üSICA",
     "descripcion": "Carne Angus, queso americano, cebolla crispi, tomate, lechuga y salsa burger y pan de papa.",
     "precio": "35000",
     "imagen": "img/carta/productos/clasica.jpg",
@@ -775,7 +775,7 @@
   "fields": {
     "categoria": 9,
     "nombre": "BARRIO BURGER",
-    "descripcion": "Carne Angus, queso fresco, viruta de papitas, tomate, salsa burguer, rosada, pi�a y pan de papa.",
+    "descripcion": "Carne Angus, queso fresco, viruta de papitas, tomate, salsa burguer, rosada, pi├▒a y pan de papa.",
     "precio": "36000",
     "imagen": "img/carta/productos/barrios_burger.jpg",
     "disponible": true,
@@ -803,7 +803,7 @@
   "fields": {
     "categoria": 9,
     "nombre": "LA GUADALAJARA",
-    "descripcion": "Carne de hamburguesa, queso cheddar, jalape�os, cebollas doradas, salsa burger y pan de papa",
+    "descripcion": "Carne de hamburguesa, queso cheddar, jalape├▒os, cebollas doradas, salsa burger y pan de papa",
     "precio": "38500",
     "imagen": "img/carta/productos/guadalajara.jpg",
     "disponible": true,
@@ -845,7 +845,7 @@
   "fields": {
     "categoria": 10,
     "nombre": "LA PATATERIA BURGUER",
-    "descripcion": "Carne Angus, con costilla desmechada en larga cocci�n, queso americano, lechuga, tomate, cebolla dorada y ripio de papa en salsa burger.",
+    "descripcion": "Carne Angus, con costilla desmechada en larga cocci├│n, queso americano, lechuga, tomate, cebolla dorada y ripio de papa en salsa burger.",
     "precio": "40000",
     "imagen": "img/carta/productos/patateria_buruger.jpg",
     "disponible": true,
@@ -900,7 +900,7 @@
   "pk": 55,
   "fields": {
     "categoria": 12,
-    "nombre": "TORTA DE EXPLOSICI�N DE CHOCOLATE",
+    "nombre": "TORTA DE EXPLOSICI├ôN DE CHOCOLATE",
     "descripcion": "Una irresistible torta de chocolate, cremosa, rica y perfecta para los amantes del cacao.",
     "precio": "11500",
     "imagen": "img/carta/productos/explosion.jpg",
@@ -915,7 +915,7 @@
   "fields": {
     "categoria": 12,
     "nombre": "BROWNIE AREQUIPE",
-    "descripcion": "Brownie con relleno cremoso de arequipe, servido con helado de tu elecci�n.",
+    "descripcion": "Brownie con relleno cremoso de arequipe, servido con helado de tu elecci├│n.",
     "precio": "16100",
     "imagen": "img/carta/productos/brownie_arequipe.jpg",
     "disponible": true,
@@ -929,7 +929,7 @@
   "fields": {
     "categoria": 12,
     "nombre": "AFOGATO",
-    "descripcion": "Helado de mocca ba�ado en caf� corto.",
+    "descripcion": "Helado de mocca ba├▒ado en caf├® corto.",
     "precio": "11200",
     "imagen": "img/carta/productos/afogato.jpg",
     "disponible": true,
@@ -957,7 +957,7 @@
   "fields": {
     "categoria": 13,
     "nombre": "SODAS LYCHE",
-    "descripcion": "Breta�a de Lyche",
+    "descripcion": "Breta├▒a de Lyche",
     "precio": "8800",
     "imagen": "img/carta/productos/lyche.jpg",
     "disponible": true,
@@ -971,7 +971,7 @@
   "fields": {
     "categoria": 13,
     "nombre": "SODA SANDIA",
-    "descripcion": "Breta�a de sand�a.",
+    "descripcion": "Breta├▒a de sand├¡a.",
     "precio": "8800",
     "imagen": "img/carta/productos/sandia.jpg",
     "disponible": true,
@@ -985,7 +985,7 @@
   "fields": {
     "categoria": 13,
     "nombre": "SODA TAMARINDO",
-    "descripcion": "Breta�a de Tamarindo.",
+    "descripcion": "Breta├▒a de Tamarindo.",
     "precio": "8800",
     "imagen": "img/carta/productos/tamarindo.jpg",
     "disponible": true,
@@ -999,7 +999,7 @@
   "fields": {
     "categoria": 13,
     "nombre": "SODA FRUTOS ROJOS",
-    "descripcion": "Breta�a de Frutos Rojos",
+    "descripcion": "Breta├▒a de Frutos Rojos",
     "precio": "8800",
     "imagen": "img/carta/productos/frutos_rojos.jpg",
     "disponible": true,
@@ -1068,10 +1068,10 @@
   "pk": 67,
   "fields": {
     "categoria": 13,
-    "nombre": "PI�A COLADA",
-    "descripcion": "Bebida especial de pi�a colada.",
+    "nombre": "PI├æA COLADA",
+    "descripcion": "Bebida especial de pi├▒a colada.",
     "precio": "11500",
-    "imagen": "img/carta/productos/pi�a_colada.jpg",
+    "imagen": "img/carta/productos/pi├▒a_colada.jpg",
     "disponible": true,
     "es_recomendado": false,
     "fecha_creacion": "2026-03-11T05:16:55.073Z"
@@ -1124,7 +1124,7 @@
   "pk": 71,
   "fields": {
     "categoria": 14,
-    "nombre": "�GUILA LIGHT",
+    "nombre": "├üGUILA LIGHT",
     "descripcion": "Cerveza Nacional.",
     "precio": "12000",
     "imagen": "img/carta/productos/aguila.jpg",
