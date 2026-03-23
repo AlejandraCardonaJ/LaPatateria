@@ -9,7 +9,7 @@ python manage.py migrate
 
 python manage.py createsuperuser --no-input || true
 
-python manage.py shell < cargar_datos.py
+# python manage.py shell < cargar_datos.py
 
 if [ "$FORCE_LOAD_DATA" = "true" ]; then
     echo "Forzando carga de datos adicional..."
