@@ -156,7 +156,7 @@ AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
 AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME", "lapatateriaa-media")
 AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME", "us-east-2")
-AWS_DEFAULT_ACL = 'public-read'
+AWS_DEFAULT_ACL = None
 
 print("*** Configuración AWS ***")
 print(f"AWS_ACCESS_KEY_ID: {AWS_ACCESS_KEY_ID[:5]}...")
