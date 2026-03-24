@@ -53,3 +53,15 @@ else
 fi
 
 echo "=== Construcción completada ==="
+
+echo "=== Prueba de escritura en S3 ==="
+python manage.py shell -c "
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+try:
+    path = default_storage.save('test.txt', ContentFile(b'Prueba de escritura'))
+    print(f'✅ Archivo guardado en: {path}')
+    print(f'URL: {default_storage.url(path)}')
+except Exception as e:
+    print(f'❌ Error: {e}')
+"
