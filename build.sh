@@ -26,6 +26,7 @@
 # echo "=== Proceso de construcción completado ==="
 
 #!/usr/bin/env bash
+#!/usr/bin/env bash
 set -o errexit
 
 echo "=== Instalando dependencias ==="
@@ -50,8 +51,5 @@ else
     echo "📦 Cargando datos iniciales..."
     python manage.py loaddata app_carta.json --verbosity=2
 fi
-
-echo "=== Verificando configuración de S3 (opcional) ==="
-python -c "from django.conf import settings; print(f'DEFAULT_FILE_STORAGE: {settings.DEFAULT_FILE_STORAGE if not settings.DEBUG else "local"}')"
 
 echo "=== Construcción completada ==="
