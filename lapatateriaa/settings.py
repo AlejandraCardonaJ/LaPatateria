@@ -17,6 +17,10 @@ import os
 from django.core.management.utils import get_random_secret_key
 import dj_database_url
 
+import boto3
+boto3.set_stream_logger('boto3', 'DEBUG')
+boto3.set_stream_logger('botocore', 'DEBUG')
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

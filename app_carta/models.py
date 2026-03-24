@@ -1,4 +1,5 @@
 from django.db import models
+from storages.backends.s3boto3 import S3Boto3Storage
 
 
 class Categoria(models.Model):
@@ -65,6 +66,7 @@ class Producto(models.Model):
     )
     imagen = models.ImageField(
         upload_to='img/carta/productos/',
+        storage=S3Boto3Storage(),
         blank=True,
         null=True,
         verbose_name="Imagen del producto"
