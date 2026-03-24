@@ -10,10 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+
+
 from pathlib import Path
 import os
 from django.core.management.utils import get_random_secret_key
 import dj_database_url
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,6 +26,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY") or get_random_secret_key()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'RENDER' not in os.environ
+print(f"*** DEBUG = {DEBUG} ***")   # ahora sí
 
 # Configuración de ALLOWED_HOSTS para producción
 ALLOWED_HOSTS = ['*']  # Permite todos los hosts en desarrollo
@@ -149,6 +153,16 @@ AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
 AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME", "lapatateriaa-media")
 AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME", "us-east-2")
 AWS_DEFAULT_ACL = 'public-read'
+
+print("*** Configuración AWS ***")
+print(f"AWS_ACCESS_KEY_ID: {AWS_ACCESS_KEY_ID[:5]}...")
+print(f"AWS_STORAGE_BUCKET_NAME: {AWS_STORAGE_BUCKET_NAME}")
+print(f"AWS_S3_REGION_NAME: {AWS_S3_REGION_NAME}")
+print(f"DEBUG: {DEBUG}")
+if DEBUG:
+    print("Usando almacenamiento local")
+else:
+    print("Usando almacenamiento S3")
 
 # Media files
 if DEBUG:
