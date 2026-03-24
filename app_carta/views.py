@@ -1,20 +1,7 @@
 from django.shortcuts import render
 from .models import Categoria, Producto
 from django.http import HttpResponse
-from django.core.files.storage import default_storage
-from django.core.files.base import ContentFile
-import traceback
 
-def test_s3(request):
-    try:
-        # Intenta guardar un archivo de prueba
-        path = default_storage.save('test.txt', ContentFile(b'Hola mundo'))
-        url = default_storage.url(path)
-        return HttpResponse(f"✅ Éxito: archivo guardado en {path}<br>URL: {url}")
-    except Exception as e:
-        # Devuelve el error detallado
-        tb = traceback.format_exc()
-        return HttpResponse(f"❌ Error: {str(e)}<br><pre>{tb}</pre>")
 
 
 def home(request):
